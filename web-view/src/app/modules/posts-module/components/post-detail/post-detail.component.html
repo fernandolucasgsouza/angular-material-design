@@ -1,0 +1,24 @@
+<button class="bg-color-1 txt-color-3 float-right" mat-raised-button=""  routerLink="/posts">
+  <span >Voltar</span>
+  <div class="mat-button-ripple mat-ripple" matripple=""></div>
+  <div class="mat-button-focus-overlay"></div>
+</button>
+
+<div class="mb-20 clear"></div>
+
+<ng-container *ngIf="!!post && !!author">
+  <h2 class="title-page">{{post.title}}</h2>
+  <p>{{post.body}}</p>
+
+  <div class="content-author">
+    <div class="datas-author"><h5 class="txt-color-2 m-all-0 fw-500">Autor:&nbsp;</h5><span>{{author.name}}</span></div>
+    <div class="datas-author"><h5 class="txt-color-2 m-all-0 fw-500">E-mail:&nbsp;</h5><span>{{author.email}}</span></div>
+    <div class="datas-author"><h5 class="txt-color-2 m-all-0 fw-500">Website:&nbsp;</h5><span>{{author.website}}</span></div>
+    <div class="datas-author"><h5 class="txt-color-2 m-all-0 fw-500">Compania:&nbsp;</h5><span>{{author.company.name}}</span></div>
+  </div>
+</ng-container>
+
+
+
+
+

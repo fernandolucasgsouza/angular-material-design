@@ -1,0 +1,38 @@
+<h2 class="title-page">Albums</h2>
+
+<div class="container-cards">
+  <div class="card-item" *ngFor="let data of datas">
+    <mat-card class="card">
+      <mat-card-title>{{data.id}}</mat-card-title>
+      <mat-card-subtitle></mat-card-subtitle>
+      <mat-card-content>{{data.title}}</mat-card-content>
+      <div class="container-options">
+
+        <button
+          class="btn-crud txt-color-7 float-right"
+          (click)="deleteAlbum(data.id)">
+          <i class="material-icons">delete</i>
+        </button>
+
+        <button
+          class="btn-crud txt-color-8 float-right"
+          (click)="updateAlbum(data)">
+          <i class="material-icons">edit</i>
+        </button>
+
+      </div>
+      <mat-card-footer ><div class="border bg-color-1"></div></mat-card-footer>
+    </mat-card>
+  </div>
+</div>
+<fs-modal
+  *ngIf="service.modal.open"
+  [title]="service.modal.title"
+  [description]="service.modal.description"
+  [footer]="service.modal.footer"
+  [open]="service.modal.open"
+  hideBtnClose="false"
+  (closeEvent)="service.onCloseModal()"
+>
+<fs-album-form></fs-album-form>
+</fs-modal>

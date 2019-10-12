@@ -1,0 +1,13 @@
+.mat-elevation-z8.table-container {
+  max-width: 940px;
+  margin: auto;
+}
+
+table {
+  width: 100%;
+}
+
+.container-btns-options {
+  display: flex;
+  justify-content: flex-end;
+}

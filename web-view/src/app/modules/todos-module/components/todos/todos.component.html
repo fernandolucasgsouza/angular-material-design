@@ -1,0 +1,40 @@
+<h2 class="title-page">Todos</h2>
+
+<div class="container-cards">
+  <div class="card-item" *ngFor="let data of datas">
+    <mat-card class="card">
+      <mat-card-title>{{data.id}}</mat-card-title>
+      <mat-card-subtitle>{{data.title}}</mat-card-subtitle>
+
+      <mat-card-content>
+        <div class="container-btns-options">
+          <div class="status" *ngIf="!!data.completed">Completo <i class="material-icons txt-color-1">favorite</i></div>
+          <div class="status" *ngIf="!data.completed"> Incompleto <i class="material-icons txt-color-1">favorite_border</i></div>
+          <button
+            class="btn-crud txt-color-8"
+            (click)="updateTodos(data)">
+            <i class="material-icons">edit</i>
+          </button>
+
+          <button
+            class="btn-crud txt-color-7"
+            (click)="deleteTodos(data.id)">
+            <i class="material-icons">delete</i>
+          </button>
+        </div>
+      </mat-card-content>
+      <mat-card-footer ><div class="border bg-color-1"></div></mat-card-footer>
+    </mat-card>
+  </div>
+</div>
+<fs-modal
+  *ngIf="service.modal.open"
+  [title]="service.modal.title"
+  [description]="service.modal.description"
+  [footer]="service.modal.footer"
+  [open]="service.modal.open"
+  hideBtnClose="false"
+  (closeEvent)="service.onCloseModal()"
+>
+<fs-todo-form></fs-todo-form>
+</fs-modal>

@@ -1,0 +1,12 @@
+.container-btns-options {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* CUSTOM MATERIAL INIT */
+
+.mat-card-content {
+  margin-bottom: 0;
+}
+
+/* CUSTOM MATERIAL END */

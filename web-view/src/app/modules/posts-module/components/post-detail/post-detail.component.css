@@ -1,0 +1,14 @@
+.datas-author {
+  display: flex;
+  align-items: center;
+  margin: 5px 0;
+}
+
+.content-author {
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(176, 176, 176, 0.18);
+  border-radius: 5px;
+  padding: 10px;
+  margin: 40px 0;
+}

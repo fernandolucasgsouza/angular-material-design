@@ -1,0 +1,19 @@
+<div class="overlay" [ngClass]="{'active open': open}">
+  <div class="container-modal">
+    <div class="header-modal">
+      <div>{{title}}</div>
+      <div [ngClass]="{'hide-close': hideBtnClose === 'true'}" class="close" (click)="close()">X</div>
+    </div>
+    <div class="body-modal">{{description}}</div>
+    <ng-content ></ng-content>
+    <div *ngIf="!!footer" class="footer-modal">{{footer}}</div>
+  </div>
+</div>
+
+
+
+<!--
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Ok</button>
+</div> -->

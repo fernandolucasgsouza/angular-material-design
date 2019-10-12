@@ -1,0 +1,38 @@
+
+<form [formGroup]="form">
+
+ <mat-form-field class="form-field-100">
+    <input
+      matInput
+      placeholder="Título"
+      formControlName="title"
+      class="form-input-100"
+    >
+    <mat-error *ngIf="!form.controls['title'].valid && form.controls['title'].touched">
+      *Campo obrigatório
+    </mat-error>
+ </mat-form-field>
+
+ <div class="container-btn-cancel-confirm float-right">
+    <button
+      class="bg-color-1 txt-color-3 btn-cancel-confirm"
+      mat-raised-button=""
+      type="button"
+      (click)="closeModal()">
+      <span >Cancelar</span>
+      <div class="mat-button-ripple mat-ripple" matripple=""></div>
+      <div class="mat-button-focus-overlay"></div>
+    </button>
+
+    <button
+      class="bg-color-1 txt-color-3 btn-cancel-confirm"
+      mat-raised-button=""
+      [disabled]="form.invalid"
+      (click)="save()"
+      >
+      <span >Salvar</span>
+      <div class="mat-button-ripple mat-ripple" matripple=""></div>
+      <div class="mat-button-focus-overlay"></div>
+    </button>
+  </div>
+</form>
