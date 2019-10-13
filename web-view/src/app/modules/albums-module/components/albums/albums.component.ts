@@ -1,9 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
-import { AlbumsService } from '../../services/albums.service';
 import { MainModel } from 'src/app/core/Models/business';
-import { SnackBarService } from 'src/app/core/services/messages/snack-bar.service';
 import { Constants } from 'src/app/core/providers/constants';
+import { AlbumsService } from '../../services/albums.service';
+import { Translaters } from 'src/app/core/providers/translaters';
+import { MatPaginator, MatTableDataSource } from '@angular/material';
+import { SnackBarService } from 'src/app/core/services/messages/snack-bar.service';
 
 @Component({
   templateUrl: './albums.component.html',
@@ -11,7 +14,10 @@ import { Constants } from 'src/app/core/providers/constants';
 })
 export class AlbumsComponent implements OnInit {
 
-  datas: Array<MainModel> = []
+  datas = new MatTableDataSource<Array<MainModel>>();
+  observableData: Observable<any>;
+
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   constructor(
     public service: AlbumsService,
@@ -19,22 +25,45 @@ export class AlbumsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.service.getAlbums().subscribe((res: Array<MainModel>) => this.datas = res);
+    Translaters.paginatorPTBR(this.paginator);
+    this.requestAlbums();
   }
 
-  updateAlbum(data: MainModel) {
+  requestAlbums() {
+    this.service.getAlbums().subscribe((res: any) => {
+      this.datas.data = res;
+      this.observableConnect();
+    });
+  }
 
-    console.log(data);
-    this.service.album = data;
-    this.service.modal.title = 'Atualizar Album'
+  openModal(datas: any) {
+    this.service.modal.title = 'Novo Album'
+    if ((typeof datas) === 'object') {
+      this.service.album = datas;
+      this.service.modal.title = 'Atualizar Album'
+    }
     this.service.modal.open = true;
-
   }
 
   deleteAlbum(id: number | string) {
     this.service.deleteAlbums(id).subscribe(() => {
+      this.deleteItem(Number(id));
       this._serviceSnackBar.message('success', Constants.MSG_SUCCESS)
     });
   }
 
+  deleteItem(id: number) {
+    for (const key in this.datas.data) {
+      if (this.datas.data[key]['id'] === id) {
+        this.datas.data.splice(Number(key), 1);
+        this.observableConnect();
+        break;
+      }
+    }
+  }
+
+  observableConnect() {
+    this.observableData = this.datas.connect();
+    this.datas.paginator = this.paginator;
+  }
 }

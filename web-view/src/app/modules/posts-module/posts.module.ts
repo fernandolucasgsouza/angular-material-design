@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { MatTableModule, MatPaginatorModule } from '@angular/material';
 
 import { PostDetailComponent } from './components';
 import { SharedModule } from 'src/app/shared/shared.module';
@@ -12,8 +11,6 @@ import { PostFormComponent } from './components/post-form/post-form.component';
   imports: [
     SharedModule,
     PostsRoutingModule,
-    MatTableModule,
-    MatPaginatorModule
   ]
 })
 export class PostsModule { }

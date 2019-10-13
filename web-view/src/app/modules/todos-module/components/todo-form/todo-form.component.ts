@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { TodosService } from '../../services/todos.service';
-import { SnackBarService } from 'src/app/core/services/messages/snack-bar.service';
+
 import { TodosModel } from 'src/app/core/Models/business';
+import { TodosService } from '../../services/todos.service';
 import { Constants } from 'src/app/core/providers/constants';
+import { SnackBarService } from 'src/app/core/services/messages/snack-bar.service';
 
 @Component({
   selector: 'fs-todo-form',
@@ -29,17 +30,41 @@ export class TodoFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.form.setValue(this._service.todos)
+    this.setValuesUpdte();
+  }
+
+  setValuesUpdte() {
+    if (this._service.todos.hasOwnProperty('id')) {
+      this.form.setValue(this._service.todos);
+      this._service.todos = new TodosModel();
+    }
   }
 
   save() {
     const id = this.form.get('id').value;
+    if (!!id) this.update(id);
+    else this.create();
+  }
+
+  create() {
+    const input = {
+      title: this.fbGroup.title.values,
+      userId: 1
+    };
+
+    this._service.createTodo(input).subscribe((res: TodosModel) => {
+      this._serviceSnackBar.message('success', Constants.MSG_SUCCESS);
+      console.warn(Constants.MSG_SUCCESS, res);
+      setTimeout(() => this.closeModal(), 4000);
+    });
+  }
+
+  update(id) {
     this._service.updateTodos(id, this.form.value).subscribe((res: TodosModel) => {
       this._serviceSnackBar.message('success', Constants.MSG_SUCCESS);
       console.warn(Constants.MSG_SUCCESS, res);
-      setTimeout(() => this.closeModal(), 5000);
+      setTimeout(() => this.closeModal(), 4000);
     });
-
   }
 
   closeModal() {

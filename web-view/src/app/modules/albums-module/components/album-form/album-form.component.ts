@@ -29,17 +29,41 @@ export class AlbumFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.form.setValue(this._service.album)
+    this.setValuesUpdate();
+  }
+
+  setValuesUpdate() {
+    if (this._service.album.hasOwnProperty('id')) {
+      this.form.setValue(this._service.album);
+      this._service.album = new MainModel();
+    }
   }
 
   save() {
     const id = this.form.get('id').value;
+    if (!!id) this.update(id);
+    else this.create();
+  }
+
+  create() {
+    const input = {
+      title: this.fbGroup.title.values,
+      userId: 1
+    };
+
+    this._service.createAlbum(input).subscribe((res: MainModel) => {
+      this._serviceSnackBar.message('success', Constants.MSG_SUCCESS);
+      console.warn(Constants.MSG_SUCCESS, res);
+      setTimeout(() => this.closeModal(), 4000);
+    });
+  }
+
+  update(id) {
     this._service.updateAlbums(id, this.form.value).subscribe((res: MainModel) => {
       this._serviceSnackBar.message('success', Constants.MSG_SUCCESS);
       console.warn(Constants.MSG_SUCCESS, res);
-      setTimeout(() => this.closeModal(), 5000);
+      setTimeout(() => this.closeModal(), 4000);
     });
-
   }
 
   closeModal() {

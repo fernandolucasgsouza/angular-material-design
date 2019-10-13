@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { BaseService } from 'src/app/core/services/base-service/base.service';
+
 import { MainModel } from 'src/app/core/Models/business';
+import { BaseService } from 'src/app/core/services/base-service/base.service';
 
 @Injectable({
   providedIn: 'root'
@@ -25,12 +26,15 @@ export class AlbumsService {
     return this._base.get('albums');
   }
 
-  public deleteAlbums(id: number | string) {
-    return this._base.delete('albums', id);
+  public createAlbum(datas: object) {
+    return this._base.post('albums', datas);
   }
 
   public updateAlbums(id: number | string, datas: object) {
     return this._base.put('albums', id, datas);
   }
 
+  public deleteAlbums(id: number | string) {
+    return this._base.delete('albums', id);
+  }
 }

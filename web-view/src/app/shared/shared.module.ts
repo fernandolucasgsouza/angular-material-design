@@ -2,10 +2,15 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import {
+  MatIconModule, MatButtonModule, MatSnackBarModule, MatFormFieldModule,
+  MatDialogModule, MatInputModule, MatDatepickerModule, MatNativeDateModule,
+  MatRadioModule, MatSelectModule, MatOptionModule, MatSlideToggleModule,
+  MatMenuModule, MatToolbarModule, MatCardModule, MatTableModule, MatPaginatorModule
+}
+  from '@angular/material';
 
-import { MatIconModule, MatButtonModule, MatSnackBarModule, MatFormFieldModule, MatDialogModule, MatDialogRef, MatInputModule, MatDatepickerModule, MatDatepicker, MatNativeDateModule, MatRadioModule, MatSelectModule, MatOptionModule, MatSlideToggleModule, ErrorStateMatcher, ShowOnDirtyErrorStateMatcher, MatMenuModule, MatToolbarModule, MatCardModule } from '@angular/material';
 import { ModalComponent } from './components/modal/modal.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [ModalComponent],
@@ -27,6 +32,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatSelectModule,
     MatOptionModule,
     MatSlideToggleModule,
+    MatTableModule,
+    MatPaginatorModule
   ],
   exports: [
     CommonModule,
@@ -49,6 +56,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatSelectModule,
     MatOptionModule,
     MatSlideToggleModule,
+    MatTableModule,
+    MatPaginatorModule,
 
     ModalComponent
   ],

@@ -1,13 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator, MatTableDataSource, MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
-
+import { MatPaginator, MatTableDataSource } from '@angular/material';
 
 import { PostsService } from '../../services/posts.service';
-import { PostModel } from 'src/app/core/Models/business/post.model';
 import { Constants } from 'src/app/core/providers/constants';
+import { Translaters } from 'src/app/core/providers/translaters';
+import { PostModel } from 'src/app/core/Models/business/post.model';
 import { SnackBarService } from 'src/app/core/services/messages/snack-bar.service';
-import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
 
 @Component({
   selector: 'fs-posts',
@@ -25,7 +24,6 @@ export class PostsComponent implements OnInit {
     public service: PostsService,
     private _router: Router,
     private _serviceSnackBar: SnackBarService,
-    private _modal: ModalComponent
   ) { }
 
   ngOnInit() {
@@ -33,13 +31,13 @@ export class PostsComponent implements OnInit {
   }
 
   requestDatasPost() {
-    this.configLabels();
-    this.service.getPosts().subscribe((resp: Array<PostModel>) => this.bodyTable.data = resp);
-    this.bodyTable.paginator = this.paginator;
+    Translaters.paginatorPTBR(this.paginator);
+    this.service.getPosts().subscribe((resp: Array<PostModel>) => (this.bodyTable.data) = resp);
+    this.loadPaginator();
   }
 
   openModal(datas: any) {
-
+    this.service.modal.title = 'Novo Post'
     if ((typeof datas) === 'object') {
       this.service.postItems = datas;
       this.service.modal.title = 'Atualizar Post'
@@ -49,20 +47,26 @@ export class PostsComponent implements OnInit {
 
   deletePost(id: number | string) {
     this.service.deletePost(id).subscribe(() => {
+      this.deleteRow(Number(id));
       this._serviceSnackBar.message('success', Constants.MSG_SUCCESS);
     });
+
   }
 
+  deleteRow(id: number) {
+    for (const key in this.bodyTable.data) {
+      if (this.bodyTable.data[key].id === id) {
+        this.bodyTable.data.splice(Number(key), 1)
+        this.loadPaginator();
+      }
+    }
+  }
+
+  loadPaginator() {
+    this.bodyTable.paginator = this.paginator;
+  }
 
   routePage(id, id_autor) {
     this._router.navigate(['/posts/detail', id, id_autor]);
-  }
-
-  configLabels() {
-    this.paginator._intl.itemsPerPageLabel = 'Itens por página';
-    this.paginator._intl.nextPageLabel = "Próxima";
-    this.paginator._intl.previousPageLabel = "Anterior";
-    this.paginator._intl.lastPageLabel = "Ultima página";
-    this.paginator._intl.firstPageLabel = "Primera página";
   }
 }

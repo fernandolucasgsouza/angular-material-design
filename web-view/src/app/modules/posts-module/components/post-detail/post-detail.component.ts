@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { PostsService } from '../../services/posts.service';
 import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 
+import { PostsService } from '../../services/posts.service';
 import { PostModel, UserModel } from 'src/app/core/Models/business';
 
 @Component({

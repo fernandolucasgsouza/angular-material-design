@@ -1,7 +1,21 @@
 <h2 class="title-page">Todos</h2>
 
+<div class="mb-20">
+    <button
+      class="bg-color-1 txt-color-3 btn-cancel-confirm"
+      mat-raised-button=""
+      (click)="openModal()"
+      >
+      <span >Novo</span>
+      <div class="mat-button-ripple mat-ripple" matripple=""></div>
+      <div class="mat-button-focus-overlay"></div>
+    </button>
+</div>
+
+<mat-paginator class="bg-color-transparent" [pageSizeOptions]="[6, 12, 24]" showFirstLastButtons></mat-paginator>
+
 <div class="container-cards">
-  <div class="card-item" *ngFor="let data of datas">
+  <div class="card-item" *ngFor="let data of observableData | async">
     <mat-card class="card">
       <mat-card-title>{{data.id}}</mat-card-title>
       <mat-card-subtitle>{{data.title}}</mat-card-subtitle>
@@ -12,7 +26,7 @@
           <div class="status" *ngIf="!data.completed"> Incompleto <i class="material-icons txt-color-1">favorite_border</i></div>
           <button
             class="btn-crud txt-color-8"
-            (click)="updateTodos(data)">
+            (click)="openModal(data)">
             <i class="material-icons">edit</i>
           </button>
 

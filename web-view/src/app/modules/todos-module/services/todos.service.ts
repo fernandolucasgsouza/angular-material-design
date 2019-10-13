@@ -26,12 +26,16 @@ export class TodosService {
     return this._base.get('todos');
   }
 
-  public deleteTodos(id: number | string) {
-    return this._base.delete('todos', id);
+  public createTodo(datas: object) {
+    return this._base.post('todos', datas);
   }
 
   public updateTodos(id: number | string, datas: object) {
     return this._base.put('todos', id, datas);
+  }
+
+  public deleteTodos(id: number | string) {
+    return this._base.delete('todos', id);
   }
 
 }
