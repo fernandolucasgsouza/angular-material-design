@@ -15,7 +15,7 @@ import { SnackBarService } from 'src/app/core/services/messages/snack-bar.servic
 })
 export class TodosComponent implements OnInit {
 
-  datas = new MatTableDataSource<Array<TodosModel>>();
+  datas = new MatTableDataSource<TodosModel>();
   observableData: Observable<any>;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -23,7 +23,9 @@ export class TodosComponent implements OnInit {
   constructor(
     private service: TodosService,
     private _serviceSnackBar: SnackBarService,
-  ) { }
+  ) {
+    this.service.cardTodo$.subscribe(item => this.updateCard(item));
+  }
 
   ngOnInit() {
     Translaters.paginatorPTBR(this.paginator);
@@ -57,6 +59,16 @@ export class TodosComponent implements OnInit {
     for (const key in this.datas.data) {
       if (this.datas.data[key]['id'] === id) {
         this.datas.data.splice(Number(key), 1);
+        this.observableConnect();
+        break;
+      }
+    }
+  }
+
+  updateCard(item: TodosModel) {
+    for (const key in this.datas.data) {
+      if (this.datas.data[key]['id'] === item.id) {
+        this.datas.data[key] = item;
         this.observableConnect();
         break;
       }

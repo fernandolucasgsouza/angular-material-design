@@ -54,7 +54,7 @@ export class AlbumFormComponent implements OnInit {
     this._service.createAlbum(input).subscribe((res: MainModel) => {
       this._serviceSnackBar.message('success', Constants.MSG_SUCCESS);
       console.warn(Constants.MSG_SUCCESS, res);
-      setTimeout(() => this.closeModal(), 4000);
+      setTimeout(() => this.closeModal(), 3000);
     });
   }
 
@@ -62,8 +62,13 @@ export class AlbumFormComponent implements OnInit {
     this._service.updateAlbums(id, this.form.value).subscribe((res: MainModel) => {
       this._serviceSnackBar.message('success', Constants.MSG_SUCCESS);
       console.warn(Constants.MSG_SUCCESS, res);
-      setTimeout(() => this.closeModal(), 4000);
+      this.updateObservable();
+      setTimeout(() => this.closeModal(), 3000);
     });
+  }
+
+  updateObservable() {
+    this._service.cardAlbum.next(this.form.value);
   }
 
   closeModal() {

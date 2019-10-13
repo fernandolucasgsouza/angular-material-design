@@ -24,7 +24,9 @@ export class PostsComponent implements OnInit {
     public service: PostsService,
     private _router: Router,
     private _serviceSnackBar: SnackBarService,
-  ) { }
+  ) {
+    this.service.bodyTable$.subscribe(item => this.updateTable(item));
+  }
 
   ngOnInit() {
     this.requestDatasPost();
@@ -62,6 +64,16 @@ export class PostsComponent implements OnInit {
     }
   }
 
+  updateTable(item: PostModel) {
+    for (const key in this.bodyTable.data) {
+      if (this.bodyTable.data[key].id === item.id) {
+        this.bodyTable.data[key] = item;
+        this.loadPaginator();
+        break;
+      }
+    }
+  }
+
   loadPaginator() {
     this.bodyTable.paginator = this.paginator;
   }
@@ -69,4 +81,5 @@ export class PostsComponent implements OnInit {
   routePage(id, id_autor) {
     this._router.navigate(['/posts/detail', id, id_autor]);
   }
+
 }

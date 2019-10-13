@@ -2,11 +2,17 @@ import { Injectable } from '@angular/core';
 import { BaseService } from 'src/app/core/services/base-service/base.service';
 import { async } from 'q';
 import { PostModel } from 'src/app/core/Models/business';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PostsService {
+
+  bodyTable: Subject<PostModel> = new Subject<PostModel>();
+  get bodyTable$() {
+    return this.bodyTable.asObservable();
+  }
 
   postItems: PostModel = new PostModel();
   modal = {

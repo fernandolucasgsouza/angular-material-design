@@ -1,3 +1,4 @@
+import { Subject } from 'rxjs';
 import { Injectable } from '@angular/core';
 
 import { MainModel } from 'src/app/core/Models/business';
@@ -7,6 +8,11 @@ import { BaseService } from 'src/app/core/services/base-service/base.service';
   providedIn: 'root'
 })
 export class AlbumsService {
+
+  cardAlbum: Subject<MainModel> = new Subject<MainModel>();
+  get cardAlbum$() {
+    return this.cardAlbum.asObservable();
+  }
 
   album: MainModel = new MainModel();
   modal = {

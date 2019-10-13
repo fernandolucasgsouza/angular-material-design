@@ -14,7 +14,7 @@ import { SnackBarService } from 'src/app/core/services/messages/snack-bar.servic
 })
 export class AlbumsComponent implements OnInit {
 
-  datas = new MatTableDataSource<Array<MainModel>>();
+  datas = new MatTableDataSource<MainModel>();
   observableData: Observable<any>;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -22,7 +22,9 @@ export class AlbumsComponent implements OnInit {
   constructor(
     public service: AlbumsService,
     private _serviceSnackBar: SnackBarService
-  ) { }
+  ) {
+    this.service.cardAlbum$.subscribe(item => this.updateCard(item));
+  }
 
   ngOnInit() {
     Translaters.paginatorPTBR(this.paginator);
@@ -56,6 +58,16 @@ export class AlbumsComponent implements OnInit {
     for (const key in this.datas.data) {
       if (this.datas.data[key]['id'] === id) {
         this.datas.data.splice(Number(key), 1);
+        this.observableConnect();
+        break;
+      }
+    }
+  }
+
+  updateCard(item: MainModel) {
+    for (const key in this.datas.data) {
+      if (this.datas.data[key]['id'] === item.id) {
+        this.datas.data[key] = item;
         this.observableConnect();
         break;
       }

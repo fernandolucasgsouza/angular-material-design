@@ -30,14 +30,14 @@ export class PostFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.isUpdateOrCreate();
+    this.setValuesUpdate();
   }
 
   /**
   * se existir propriedade id - updade
   * senão - create
   */
-  isUpdateOrCreate() {
+  setValuesUpdate() {
     if (this._service.postItems.hasOwnProperty('id')) {
       this.form.setValue(this._service.postItems);
       this._service.postItems = new PostModel();
@@ -60,7 +60,7 @@ export class PostFormComponent implements OnInit {
     this._service.createPost(input).subscribe((res: PostModel) => {
       this._serviceSnackBar.message('success', Constants.MSG_SUCCESS);
       console.warn(Constants.MSG_SUCCESS, res);
-      setTimeout(() => this.closeModal(), 6000);
+      setTimeout(() => this.closeModal(), 3000);
     });
   }
 
@@ -68,8 +68,13 @@ export class PostFormComponent implements OnInit {
     this._service.updatePost(id, this.form.value).subscribe((res: PostModel) => {
       this._serviceSnackBar.message('success', Constants.MSG_SUCCESS);
       console.warn(Constants.MSG_SUCCESS, res);
-      setTimeout(() => this.closeModal(), 6000);
+      this.updateObservable();
+      setTimeout(() => this.closeModal(), 3000);
     });
+  }
+
+  updateObservable() {
+    this._service.bodyTable.next(this.form.value);
   }
 
   closeModal() {

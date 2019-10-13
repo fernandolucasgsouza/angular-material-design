@@ -1,3 +1,4 @@
+import { Subject } from 'rxjs';
 import { Injectable } from '@angular/core';
 
 import { BaseService } from 'src/app/core/services/base-service/base.service';
@@ -7,6 +8,11 @@ import { TodosModel } from 'src/app/core/Models/business';
   providedIn: 'root'
 })
 export class TodosService {
+
+  cardTodo: Subject<TodosModel> = new Subject<TodosModel>();
+  get cardTodo$() {
+    return this.cardTodo.asObservable();
+  }
 
   todos: TodosModel = new TodosModel();
   modal = {
