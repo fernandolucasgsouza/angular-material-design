@@ -79,3 +79,9 @@
 .hide-close {
   display: none;
 }
+
+@media(max-width:768px) {
+  .container-modal {
+    width: 85%;
+  }
+}

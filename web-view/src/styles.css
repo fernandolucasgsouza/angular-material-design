@@ -90,6 +90,11 @@ body {
   padding: 40px;
 }
 
+.padding-page-main {
+  padding: 40px;
+}
+
+;
 .m-all-0 {
   margin: 0
 }
@@ -320,5 +325,11 @@ body {
   }
   .fs-col-6 {
     width: 100%;
+  }
+  .footer-col.fs-col-6 {
+    margin: 0;
+  }
+  .padding-page-main {
+    padding: 20px 10px;
   }
 }
