@@ -20,3 +20,25 @@
   color: #fff;
   text-decoration: none;
 }
+
+#container-spinner {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(103, 0, 218, .4);
+  z-index: 6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: visibility 750s, opacity 750ms ease-in-out;
+}
+
+#container-spinner.show {
+  opacity: 1;
+  visibility: visible;
+  transition: visibility 250s, opacity 750ms ease-in-out;
+}

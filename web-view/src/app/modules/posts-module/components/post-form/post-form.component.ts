@@ -60,7 +60,7 @@ export class PostFormComponent implements OnInit {
     this._service.createPost(input).subscribe((res: PostModel) => {
       this._serviceSnackBar.message('success', Constants.MSG_SUCCESS);
       console.warn(Constants.MSG_SUCCESS, res);
-      setTimeout(() => this.closeModal(), 3000);
+      this.closeModal()
     });
   }
 
@@ -69,7 +69,7 @@ export class PostFormComponent implements OnInit {
       this._serviceSnackBar.message('success', Constants.MSG_SUCCESS);
       console.warn(Constants.MSG_SUCCESS, res);
       this.updateObservable();
-      setTimeout(() => this.closeModal(), 3000);
+      this.closeModal()
     });
   }
 

@@ -299,6 +299,10 @@ body {
   background-color: transparent;
 }
 
+.mat-progress-spinner circle, .mat-spinner circle {
+  stroke: rgba(255, 255, 255, .7);
+}
+
 /*CUSTOM MATERIAL END */
 
 @media( max-width:992px) {
