@@ -1,7 +1,8 @@
 # WebView
 
-Angular version 8.3.6.
-
+versions
+Angular CLI  8.3.6.
+Angular Material Design 8.2.3
 
 ## Link do projeto
 
