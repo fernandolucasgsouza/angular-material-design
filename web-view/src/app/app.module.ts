@@ -14,10 +14,11 @@ import { MatProgressSpinnerModule } from '@angular/material';
   ],
   imports: [
     CoreModule,
-    BrowserModule,
-    AppRoutingModule,
+    MatProgressSpinnerModule,
     BrowserAnimationsModule,
-    MatProgressSpinnerModule
+
+    BrowserModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
