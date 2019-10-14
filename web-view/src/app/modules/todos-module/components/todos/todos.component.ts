@@ -21,7 +21,7 @@ export class TodosComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   constructor(
-    private service: TodosService,
+    public service: TodosService,
     private _serviceSnackBar: SnackBarService,
   ) {
     this.service.cardTodo$.subscribe(item => this.updateCard(item));

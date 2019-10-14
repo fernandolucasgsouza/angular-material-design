@@ -4,7 +4,7 @@
     <button
       class="bg-color-1 txt-color-3 btn-cancel-confirm"
       mat-raised-button=""
-      (click)="openModal()"
+      (click)="openModal('null')"
       >
       <span >Novo</span>
       <div class="mat-button-ripple mat-ripple" matripple=""></div>
@@ -44,7 +44,7 @@
   [description]="service.modal.description"
   [footer]="service.modal.footer"
   [open]="service.modal.open"
-  hideBtnClose="false"
+  hideBtnClose="1"
   (closeEvent)="service.onCloseModal()"
 >
 <fs-album-form></fs-album-form>

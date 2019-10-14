@@ -12,7 +12,7 @@ export class ModalComponent implements OnInit {
   @Input() description: string;
   @Input() footer: string;
   @Input() open: boolean;
-  @Input() hideBtnClose: boolean;
+  @Input() hideBtnClose: '0' | '1'; // [ 0: hide | 1 :show ]
 
   @Output() closeEvent: EventEmitter<Boolean> = new EventEmitter();
 
