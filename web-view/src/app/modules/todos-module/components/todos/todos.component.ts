@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatPaginator } from '@angular/material';
 
@@ -17,6 +17,7 @@ export class TodosComponent implements OnInit {
 
   datas = new MatTableDataSource<TodosModel>();
   observableData: Observable<any>;
+  subscription: Subscription;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
@@ -24,12 +25,16 @@ export class TodosComponent implements OnInit {
     public service: TodosService,
     private _serviceSnackBar: SnackBarService,
   ) {
-    this.service.cardTodo$.subscribe(item => this.updateCard(item));
+    this.subscription = this.service.cardTodo$.subscribe(item => this.updateCard(item));
   }
 
   ngOnInit() {
     Translaters.paginatorPTBR(this.paginator);
     this.requestTodos();
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   requestTodos() {

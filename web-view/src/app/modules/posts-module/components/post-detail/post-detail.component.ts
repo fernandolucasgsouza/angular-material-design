@@ -1,3 +1,4 @@
+import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 
@@ -15,6 +16,7 @@ export class PostDetailComponent implements OnInit {
   idAutor: number;
   post: PostModel;
   author: UserModel;
+  subscription: Subscription;
 
   constructor(
     private _service: PostsService,
@@ -22,8 +24,10 @@ export class PostDetailComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.id = +this._activatedRoute.snapshot.paramMap.get('id');
-    this.idAutor = +this._activatedRoute.snapshot.paramMap.get('id_autor');
+    this.subscription = this._activatedRoute.params.subscribe((params: any) => {
+      this.id = params['id'];
+      this.idAutor = params['id_autor'];
+    });
     this.resquestDatasList();
   }
 
@@ -34,6 +38,10 @@ export class PostDetailComponent implements OnInit {
         this.author = res;
       });
     });
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
 }

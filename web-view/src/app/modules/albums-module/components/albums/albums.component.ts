@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { MainModel } from 'src/app/core/Models/business';
@@ -16,6 +16,7 @@ export class AlbumsComponent implements OnInit {
 
   datas = new MatTableDataSource<MainModel>();
   observableData: Observable<any>;
+  subscription: Subscription;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
@@ -23,12 +24,16 @@ export class AlbumsComponent implements OnInit {
     public service: AlbumsService,
     private _serviceSnackBar: SnackBarService
   ) {
-    this.service.cardAlbum$.subscribe(item => this.updateCard(item));
+    this.subscription = this.service.cardAlbum$.subscribe(item => this.updateCard(item));
   }
 
   ngOnInit() {
     Translaters.paginatorPTBR(this.paginator);
     this.requestAlbums();
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   requestAlbums() {

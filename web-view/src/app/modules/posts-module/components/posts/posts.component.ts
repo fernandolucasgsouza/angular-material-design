@@ -7,6 +7,7 @@ import { Constants } from 'src/app/core/providers/constants';
 import { Translaters } from 'src/app/core/providers/translaters';
 import { PostModel } from 'src/app/core/Models/business/post.model';
 import { SnackBarService } from 'src/app/core/services/messages/snack-bar.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'fs-posts',
@@ -17,6 +18,7 @@ export class PostsComponent implements OnInit {
 
   headerTable: string[] = ['id', 'title', 'options'];
   bodyTable = new MatTableDataSource<PostModel>();
+  subscription: Subscription
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
@@ -25,16 +27,20 @@ export class PostsComponent implements OnInit {
     private _router: Router,
     private _serviceSnackBar: SnackBarService,
   ) {
-    this.service.bodyTable$.subscribe(item => this.updateTable(item));
+    this.subscription = this.service.bodyTable$.subscribe(item => this.updateTable(item));
   }
 
   ngOnInit() {
     this.requestDatasPost();
   }
 
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
   requestDatasPost() {
     Translaters.paginatorPTBR(this.paginator);
-    this.service.getPosts().subscribe((resp: Array<PostModel>) => (this.bodyTable.data) = resp);
+    this.service.getPosts().subscribe((res: Array<PostModel>) => this.bodyTable.data = res);
     this.loadPaginator();
   }
 
