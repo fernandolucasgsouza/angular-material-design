@@ -45,18 +45,18 @@ export class TodosComponent implements OnInit {
   }
 
   openModal(datas: any) {
-    this.service.modal.title = 'Novo Todo'
+    this.service.modal.title = 'Novo Todo';
     if ((typeof datas) === 'object') {
       this.service.todos = datas;
-      this.service.modal.title = 'Atualizar Todo'
+      this.service.modal.title = 'Atualizar Todo';
     }
     this.service.modal.open = true;
   }
 
   deleteTodos(id: number | string) {
     this.service.deleteTodos(id).subscribe(() => {
-      this.deleteItem(Number(id))
-      this._serviceSnackBar.message('success', Constants.MSG_SUCCESS)
+      this.deleteItem(Number(id));
+      this._serviceSnackBar.message('success', Constants.MSG_SUCCESS);
     });
   }
 

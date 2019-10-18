@@ -55,7 +55,7 @@ export class TodoFormComponent implements OnInit {
     this._service.createTodo(input).subscribe((res: TodosModel) => {
       this._serviceSnackBar.message('success', Constants.MSG_SUCCESS);
       console.warn(Constants.MSG_SUCCESS, res);
-      setTimeout(() => this.closeModal(), 3000);
+      this.closeModal();
     });
   }
 
@@ -64,13 +64,14 @@ export class TodoFormComponent implements OnInit {
       this._serviceSnackBar.message('success', Constants.MSG_SUCCESS);
       console.warn(Constants.MSG_SUCCESS, res);
       this.updateObservable();
-      setTimeout(() => this.closeModal(), 3000);
+      this.closeModal();
     });
   }
 
   updateObservable() {
     this._service.cardTodo.next(this.form.value);
   }
+
   closeModal() {
     this._service.onCloseModal();
   }

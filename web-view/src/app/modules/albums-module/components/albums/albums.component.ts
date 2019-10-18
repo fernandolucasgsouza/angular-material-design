@@ -44,10 +44,10 @@ export class AlbumsComponent implements OnInit {
   }
 
   openModal(datas: any) {
-    this.service.modal.title = 'Novo Album'
+    this.service.modal.title = 'Novo Album';
     if ((typeof datas) === 'object') {
       this.service.album = datas;
-      this.service.modal.title = 'Atualizar Album'
+      this.service.modal.title = 'Atualizar Album';
     }
     this.service.modal.open = true;
   }
@@ -55,7 +55,7 @@ export class AlbumsComponent implements OnInit {
   deleteAlbum(id: number | string) {
     this.service.deleteAlbums(id).subscribe(() => {
       this.deleteItem(Number(id));
-      this._serviceSnackBar.message('success', Constants.MSG_SUCCESS)
+      this._serviceSnackBar.message('success', Constants.MSG_SUCCESS);
     });
   }
 
