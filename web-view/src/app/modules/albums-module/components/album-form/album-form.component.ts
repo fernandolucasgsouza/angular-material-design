@@ -1,10 +1,9 @@
+import { Subscription } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { FormGroup, Validators, FormBuilder, FormControl } from '@angular/forms';
 
 import { AlbumsService } from '../../services/albums.service';
-import { SnackBarService } from 'src/app/core/services/messages/snack-bar.service';
 import { MainModel } from 'src/app/core/Models/business';
-import { Constants } from 'src/app/core/providers/constants';
 
 @Component({
   selector: 'fs-album-form',
@@ -13,17 +12,17 @@ import { Constants } from 'src/app/core/providers/constants';
 })
 export class AlbumFormComponent implements OnInit {
 
+  subscription: Subscription;
   form: FormGroup;
-  fbGroup = {
-    id: [''],
-    userId: [''],
-    title: ['', Validators.required],
-  }
+  fbGroup = ({
+    id: new FormControl(''),
+    userId: new FormControl(''),
+    title: new FormControl('', [Validators.required]),
+  })
 
   constructor(
     private _fb: FormBuilder,
-    private _service: AlbumsService,
-    private _serviceSnackBar: SnackBarService
+    private _service: AlbumsService
   ) {
     this.form = _fb.group(this.fbGroup);
   }
@@ -32,8 +31,13 @@ export class AlbumFormComponent implements OnInit {
     this.setValuesUpdate();
   }
 
+  ngOnDestroy(): void {
+    if (this.subscription)
+      this.subscription.unsubscribe;
+  }
+
   setValuesUpdate() {
-    if (this._service.album.hasOwnProperty('id')) {
+    if (!!this._service.album && !!this._service.album.id) {
       this.form.setValue(this._service.album);
       this._service.album = new MainModel();
     }
@@ -41,34 +45,17 @@ export class AlbumFormComponent implements OnInit {
 
   save() {
     const id = this.form.get('id').value;
-    if (!!id) this.update(id);
-    else this.create();
+    !!id ? this.update(id) : this.create();
   }
 
   create() {
-    const input = {
-      title: this.fbGroup.title.values,
-      userId: 1
-    };
-
-    this._service.createAlbum(input).subscribe((res: MainModel) => {
-      this._serviceSnackBar.message('success', Constants.MSG_SUCCESS);
-      console.warn(Constants.MSG_SUCCESS, res);
-      this.closeModal();
-    });
+    this.fbGroup.id.setValue(null);
+    this.fbGroup.userId.setValue(1);
+    this._service.createAlbum(this.form.value);
   }
 
-  update(id) {
-    this._service.updateAlbums(id, this.form.value).subscribe((res: MainModel) => {
-      this._serviceSnackBar.message('success', Constants.MSG_SUCCESS);
-      console.warn(Constants.MSG_SUCCESS, res);
-      this.updateObservable();
-      this.closeModal();
-    });
-  }
-
-  updateObservable() {
-    this._service.cardAlbum.next(this.form.value);
+  update(id: string) {
+    this._service.updateAlbums(id, this.form.value);
   }
 
   closeModal() {

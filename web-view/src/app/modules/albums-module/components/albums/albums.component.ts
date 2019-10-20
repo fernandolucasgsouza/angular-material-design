@@ -1,11 +1,11 @@
 import { Observable, Subscription } from 'rxjs';
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator, MatTableDataSource } from '@angular/material';
 
 import { MainModel } from 'src/app/core/Models/business';
 import { Constants } from 'src/app/core/providers/constants';
 import { AlbumsService } from '../../services/albums.service';
 import { Translaters } from 'src/app/core/providers/translaters';
-import { MatPaginator, MatTableDataSource } from '@angular/material';
 import { SnackBarService } from 'src/app/core/services/messages/snack-bar.service';
 
 @Component({
@@ -33,7 +33,8 @@ export class AlbumsComponent implements OnInit {
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    if (this.subscription)
+      this.subscription.unsubscribe();
   }
 
   requestAlbums() {

@@ -1,5 +1,5 @@
 export class MainModel {
-  id: number
-  userId: number
+  id: number | null = null;
+  userId: number;
   title: string;
 }

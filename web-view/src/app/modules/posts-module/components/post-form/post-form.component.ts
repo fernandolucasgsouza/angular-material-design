@@ -1,10 +1,9 @@
+import { Subscription } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { FormGroup, Validators, FormBuilder, FormControl } from '@angular/forms';
 
 import { PostModel } from 'src/app/core/Models/business';
 import { PostsService } from '../../services/posts.service';
-import { Constants } from 'src/app/core/providers/constants';
-import { SnackBarService } from 'src/app/core/services/messages/snack-bar.service';
 
 @Component({
   selector: 'fs-post-form',
@@ -13,18 +12,18 @@ import { SnackBarService } from 'src/app/core/services/messages/snack-bar.servic
 })
 export class PostFormComponent implements OnInit {
 
+  subscription: Subscription;
   form: FormGroup;
-  fbGroup = {
-    id: [''],
-    userId: [''],
-    title: ['', Validators.required],
-    body: ['', Validators.required],
-  }
+  fbGroup = ({
+    id: new FormControl(''),
+    userId: new FormControl(''),
+    title: new FormControl('', [Validators.required]),
+    body: new FormControl('', [Validators.required])
+  })
 
   constructor(
     private _fb: FormBuilder,
     private _service: PostsService,
-    private _serviceSnackBar: SnackBarService
   ) {
     this.form = _fb.group(this.fbGroup);
   }
@@ -33,12 +32,17 @@ export class PostFormComponent implements OnInit {
     this.setValuesUpdate();
   }
 
+  ngOnDestroy(): void {
+    if (this.subscription)
+      this.subscription.unsubscribe;
+  }
+
   /**
   * se existir propriedade id - updade
   * senão - create
   */
   setValuesUpdate() {
-    if (this._service.postItems.hasOwnProperty('id')) {
+    if (!!this._service.postItems && !!this._service.postItems.id) {
       this.form.setValue(this._service.postItems);
       this._service.postItems = new PostModel();
     }
@@ -46,38 +50,21 @@ export class PostFormComponent implements OnInit {
 
   save() {
     const id = this.form.get('id').value;
-    if (!!id) this.update(id);
-    else this.create();
+    !!id ? this.update(id) : this.create();
   }
 
   create() {
-    const input = {
-      title: this.fbGroup.title.values,
-      body: this.fbGroup.body.values,
-      userId: 1
-    };
-
-    this._service.createPost(input).subscribe((res: PostModel) => {
-      this._serviceSnackBar.message('success', Constants.MSG_SUCCESS);
-      console.warn(Constants.MSG_SUCCESS, res);
-      this.closeModal();
-    });
+    this.fbGroup.id.setValue(null);
+    this.fbGroup.userId.setValue(1);
+    this.subscription = this._service.createPost(this.form.value);
   }
 
-  update(id) {
-    this._service.updatePost(id, this.form.value).subscribe((res: PostModel) => {
-      this._serviceSnackBar.message('success', Constants.MSG_SUCCESS);
-      console.warn(Constants.MSG_SUCCESS, res);
-      this.updateObservable();
-      this.closeModal();
-    });
-  }
-
-  updateObservable() {
-    this._service.bodyTable.next(this.form.value);
+  update(id: string) {
+    this.subscription = this._service.updatePost(id, this.form.value);
   }
 
   closeModal() {
     this._service.onCloseModal();
   }
+
 }

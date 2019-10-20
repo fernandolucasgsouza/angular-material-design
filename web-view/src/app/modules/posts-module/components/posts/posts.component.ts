@@ -1,5 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, MatTableDataSource } from '@angular/material';
 
 import { PostsService } from '../../services/posts.service';
@@ -7,7 +8,6 @@ import { Constants } from 'src/app/core/providers/constants';
 import { Translaters } from 'src/app/core/providers/translaters';
 import { PostModel } from 'src/app/core/Models/business/post.model';
 import { SnackBarService } from 'src/app/core/services/messages/snack-bar.service';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'fs-posts',
@@ -35,7 +35,8 @@ export class PostsComponent implements OnInit {
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    if (this.subscription)
+      this.subscription.unsubscribe();
   }
 
   requestDatasPost() {
@@ -45,10 +46,10 @@ export class PostsComponent implements OnInit {
   }
 
   openModal(datas: any) {
-    this.service.modal.title = 'Novo Post'
+    this.service.modal.title = 'Novo Post';
     if ((typeof datas) === 'object') {
       this.service.postItems = datas;
-      this.service.modal.title = 'Atualizar Post'
+      this.service.modal.title = 'Atualizar Post';
     }
     this.service.modal.open = true;
   }
@@ -58,13 +59,12 @@ export class PostsComponent implements OnInit {
       this.deleteRow(Number(id));
       this._serviceSnackBar.message('success', Constants.MSG_SUCCESS);
     });
-
   }
 
   deleteRow(id: number) {
     for (const key in this.bodyTable.data) {
       if (this.bodyTable.data[key].id === id) {
-        this.bodyTable.data.splice(Number(key), 1)
+        this.bodyTable.data.splice(Number(key), 1);
         this.loadPaginator();
       }
     }
