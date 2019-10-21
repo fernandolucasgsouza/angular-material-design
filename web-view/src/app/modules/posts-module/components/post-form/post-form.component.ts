@@ -4,6 +4,7 @@ import { FormGroup, Validators, FormBuilder, FormControl } from '@angular/forms'
 
 import { PostModel } from 'src/app/core/Models/business';
 import { PostsService } from '../../services/posts.service';
+import { InputProvider } from 'src/app/core/providers/input';
 
 @Component({
   selector: 'fs-post-form',
@@ -54,7 +55,7 @@ export class PostFormComponent implements OnInit {
   }
 
   create() {
-    this.fbGroup.id.setValue(null);
+    InputProvider.complex(['id'], this.form);
     this.fbGroup.userId.setValue(1);
     this.subscription = this._service.createPost(this.form.value);
   }

@@ -4,6 +4,7 @@ import { FormGroup, Validators, FormBuilder, FormControl } from '@angular/forms'
 
 import { TodosModel } from 'src/app/core/Models/business';
 import { TodosService } from '../../services/todos.service';
+import { InputProvider } from 'src/app/core/providers/input';
 
 @Component({
   selector: 'fs-todo-form',
@@ -50,7 +51,7 @@ export class TodoFormComponent implements OnInit {
   }
 
   create() {
-    this.fbGroup.id.setValue(null);
+    InputProvider.complex(['id'], this.form);
     this.fbGroup.userId.setValue(1);
     this.subscription = this._service.createTodo(this.form.value);
   }

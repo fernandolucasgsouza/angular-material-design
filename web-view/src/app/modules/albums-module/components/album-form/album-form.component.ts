@@ -4,6 +4,7 @@ import { FormGroup, Validators, FormBuilder, FormControl } from '@angular/forms'
 
 import { AlbumsService } from '../../services/albums.service';
 import { MainModel } from 'src/app/core/Models/business';
+import { InputProvider } from 'src/app/core/providers/input';
 
 @Component({
   selector: 'fs-album-form',
@@ -49,7 +50,7 @@ export class AlbumFormComponent implements OnInit {
   }
 
   create() {
-    this.fbGroup.id.setValue(null);
+    InputProvider.complex(['id'], this.form);
     this.fbGroup.userId.setValue(1);
     this._service.createAlbum(this.form.value);
   }
