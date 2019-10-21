@@ -3,7 +3,6 @@ import { FormGroup } from '@angular/forms';
 export class InputProvider {
 
   /**
-   *
    * @param inputs passar array de items que deseja remover do model @exemple ['id', 'idUser']
    * @param formGroup  model form:FormGroup
    */
