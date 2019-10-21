@@ -10,7 +10,7 @@ Lá você pode navegar por toda aplicação (http://framework.fernando-developer
 
 ## OBS
 Integração com uma api fake (https://jsonplaceholder.typicode.com/)
-API realiza reqeuests e respones utilizando todos os verbos, porém o dados não são consistidos no servidor, <br>
+API realiza requests e responses utilizando todos os verbos, porém os dados não são consistidos no servidor, <br>
 para validar se as mensagens de sucessos se estão corretas com os responses basta abrir o inspect do navegador.
 
 ## Servidor produção
