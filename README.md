@@ -6,7 +6,7 @@ Angular Material Design 8.2.3
 
 ## Link do projeto
 
-Lá você pode navegar por toda aplicação (http://framework.fernando-developer.com)
+Lá você pode navegar por toda aplicação (http://fs.fernando-developer.com)
 
 ## OBS
 Integração com uma api fake (https://jsonplaceholder.typicode.com/)

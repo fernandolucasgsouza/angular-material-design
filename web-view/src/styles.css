@@ -207,6 +207,11 @@ body {
   display: flex;
 }
 
+.fs-col-4 {
+  width: 33.33%;
+  margin: 10px;
+}
+
 .fs-col-6 {
   width: 50%;
   margin: 10px;
@@ -313,6 +318,9 @@ body {
   .card-item {
     width: 48%;
   }
+  .fs-col-4 {
+    width: 100%;
+  }
 }
 
 @media( max-width:768px) {
@@ -325,7 +333,7 @@ body {
   .fs-col-6 {
     width: 100%;
   }
-  .footer-col.fs-col-6 {
+  .fs-col-4, .footer-col.fs-col-6 {
     margin: 0;
   }
   .padding-page-main {
